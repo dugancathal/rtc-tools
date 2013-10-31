@@ -2,7 +2,7 @@
 'use strict';
 
 /**
-  ## connect-media
+  ### connect-media
 
   ```js
   var connectMedia = require('rtc/connect-media');
@@ -21,7 +21,7 @@
      'connect-media` helper manually triggers that event once a stream is
      added (after a short delay).
 
-  ### Example Usage
+  #### Example Usage
 
   <<< examples/connect-media.js
 

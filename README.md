@@ -37,7 +37,7 @@ conn = rtc.createConnection({
 
 ## Helper Modules
 
-## connect-media
+### connect-media
 
 ```js
 var connectMedia = require('rtc/connect-media');
@@ -56,7 +56,7 @@ primarily does two things that are of major benefit:
    'connect-media` helper manually triggers that event once a stream is
    added (after a short delay).
 
-### Example Usage
+#### Example Usage
 
 ```js
 var quickconnect = require('rtc-quickconnect');
