@@ -33,7 +33,11 @@ conn = rtc.createConnection({
 });
 ```
 
-## rtc/connect-media
+## connect-media
+
+```js
+var connectMedia = require('rtc/connect-media');
+```
 
 The `rtc/connect-media` helper module is a convenience helper for
 associating an `rtc-media` capture source with a peer connection.  It
@@ -66,7 +70,11 @@ quickconnect('test')
   });
 ```
 
-## rtc/couple
+## couple
+
+```js
+var couple = require('rtc/couple');
+```
 
 ### couple(pc, targetAttr, signaller, opts?)
 
@@ -95,6 +103,10 @@ couple(pc, { id: 'blah' }, signaller, { sdpfilter: tweakSdp });
 ```
 
 ## rtc/detect
+
+```js
+var detect = require('rtc/detect');
+```
 
 Provide the [rtc-core/detect](https://github.com/rtc-io/rtc-core#detect) 
 functionality.
@@ -142,10 +154,18 @@ options object.
 
 ## rtc/media
 
+```js
+var media = require('rtc/media');
+```
+
 Provide the core [rtc-media](https://github.com/rtc-io/rtc-media) for
 convenience.
 
-## rtc/monitor
+## monitor
+
+```js
+var monitor = require('rtc/monitor');
+```
 
 In most current implementations of `RTCPeerConnection` it is quite
 difficult to determine whether a peer connection is active and ready
@@ -197,6 +217,10 @@ Test an `RTCPeerConnection` to see if it's currently open.  The test for
 
 ## rtc/signaller
 
+```js
+var signaller = require('rtc/signaller');
+```
+
 Provide the core [rtc-signaller](https://github.com/rtc-io/rtc-signaller)
 for convenience.
 
@@ -221,3 +245,21 @@ listen(pc).on('negotiationneeded', function(evt) {
 The `listen` helper provides an event emitter for a peer connection object
 that will bind to each of the core events WebRTC events (unless overriden
 by providing the listen function additional arguments).
+
+## License(s)
+
+### Apache 2.0
+
+Copyright 2013 National ICT Australia Limited (NICTA)
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.

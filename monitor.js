@@ -13,7 +13,11 @@ var W3C_STATES = {
 };
 
 /**
-  ## rtc/monitor
+  ## monitor
+
+  ```js
+  var monitor = require('rtc/monitor');
+  ```
 
   In most current implementations of `RTCPeerConnection` it is quite
   difficult to determine whether a peer connection is active and ready

@@ -2,7 +2,11 @@
 'use strict';
 
 /**
-  ## rtc/connect-media
+  ## connect-media
+
+  ```js
+  var connectMedia = require('rtc/connect-media');
+  ```
 
   The `rtc/connect-media` helper module is a convenience helper for
   associating an `rtc-media` capture source with a peer connection.  It

@@ -8,7 +8,11 @@ var monitor = require('./monitor');
 var detect = require('./detect');
 
 /**
-  ## rtc/couple
+  ## couple
+
+  ```js
+  var couple = require('rtc/couple');
+  ```
 
   ### couple(pc, targetAttr, signaller, opts?)
 
