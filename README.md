@@ -224,28 +224,6 @@ var signaller = require('rtc/signaller');
 Provide the core [rtc-signaller](https://github.com/rtc-io/rtc-signaller)
 for convenience.
 
-## Internal RTC Helper Libraries
-
-The RTC library uses a number of helper modules that are contained within
-the `lib/` folder of the `rtc-io/rtc` repository.  While these are designed
-primarily for internal use, they can be accessed by directly requiring
-the modules, e.g. `require('rtc/lib/helpermodule')`
-
-## rtc/lib/listen
-
-```js
-var listen = require('rtc/lib/listen');
-
-// listen for negotiation needed events
-listen(pc).on('negotiationneeded', function(evt) {
-
-});
-```
-
-The `listen` helper provides an event emitter for a peer connection object
-that will bind to each of the core events WebRTC events (unless overriden
-by providing the listen function additional arguments).
-
 ## License(s)
 
 ### Apache 2.0
