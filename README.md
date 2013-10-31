@@ -33,6 +33,21 @@ conn = rtc.createConnection({
 });
 ```
 
+## rtc/connect-media
+
+The `rtc/connect-media` helper module is a convenience helper for
+associating an `rtc-media` capture source with a peer connection.  It
+primarily does two things that are of major benefit:
+
+1. if the media stream is ready adds it immediately, otherwise waits for a
+   media `capture` event and adds the stream at that point.
+
+2. Current WebRTC implementations in Firefox do not trigger relevant
+   `negotiationneeded` events when a stream is added to a peer. This is
+   important behaviour in rtc.io and the WebRTC spec, and thus this
+   'connect-media` helper manually triggers that event once a stream is
+   added (after a short delay).
+
 ## rtc/couple
 
 ### couple(pc, targetAttr, signaller, opts?)
@@ -79,6 +94,22 @@ var generators = require('rtc/generators');
 
 Generate a configuration object suitable for passing into an W3C 
 RTCPeerConnection constructor first argument, based on our custom config.
+
+### generators.connectionConstraints(flags, constraints)
+
+This is a helper function that will generate appropriate connection
+constraints for a new `RTCPeerConnection` object which is constructed
+in the following way:
+
+```js
+var conn = new RTCPeerConnection(flags, constraints);
+```
+
+In most cases the constraints object can be left empty, but when creating
+data channels some additional options are required.  This function
+can generate those additional options and intelligently combine any
+user defined constraints (in `constraints`) with shorthand flags that
+might be passed while using the `rtc.createConnection` helper.
 
 ### generators.mediaConstraints(flags, context)
 
