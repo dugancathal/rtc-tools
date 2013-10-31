@@ -48,6 +48,24 @@ primarily does two things that are of major benefit:
    'connect-media` helper manually triggers that event once a stream is
    added (after a short delay).
 
+### Example Usage
+
+```js
+var quickconnect = require('rtc-quickconnect');
+var connectMedia = require('../connect-media');
+
+// incldue the media module and immediately request to capture media
+var media = require('rtc/media')();
+
+// create a new quickconnection instance in the test namespace
+quickconnect('test')
+  .on('peer', function(conn) {
+    // when a new peer is connected, connect the media instance
+    // to the new connection which is coupled behind the scenes in quickconnect
+    connectMedia(media, conn);
+  });
+```
+
 ## rtc/couple
 
 ### couple(pc, targetAttr, signaller, opts?)

@@ -17,6 +17,10 @@
      'connect-media` helper manually triggers that event once a stream is
      added (after a short delay).
 
+  ### Example Usage
+
+  <<< examples/connect-media.js
+
 **/
 module.exports = function(media, peer) {
 
