@@ -2,7 +2,7 @@
 'use strict';
 
 /**
-  ## rtc/media
+  ### media
 
   ```js
   var media = require('rtc/media');

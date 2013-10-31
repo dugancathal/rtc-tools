@@ -8,20 +8,22 @@ var monitor = require('./monitor');
 var detect = require('./detect');
 
 /**
-  ## couple
+  ### couple
 
   ```js
   var couple = require('rtc/couple');
   ```
 
-  ### couple(pc, targetAttr, signaller, opts?)
+  ```js
+  couple(pc, targetAttr, signaller, opts?)
+  ```
 
   Couple a WebRTC connection with another webrtc connection via a
   signalling scope.  The `targetAttr` argument specifies the criteria that
   are passed onto a `/request` command when looking for remote peer
   to couple and exchange messages with.
 
-  ### Example Usage
+  #### Example Usage
 
   ```js
   var couple = require('rtc/couple');
@@ -29,7 +31,7 @@ var detect = require('./detect');
   couple(new RTCPeerConnection(), { id: 'test' }, signaller);
   ```
 
-  ### Using Filters
+  #### Using Filters
 
   In certain instances you may wish to modify the raw SDP that is provided
   by the `createOffer` and `createAnswer` calls.  This can be done by passing

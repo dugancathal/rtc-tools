@@ -41,7 +41,7 @@ var mappings = {
 var knownFlags = ['video', 'audio', 'data'];
 
 /**
-  ## generators
+  ### generators
 
   ```js
   var generators = require('rtc/generators');
@@ -53,7 +53,7 @@ var knownFlags = ['video', 'audio', 'data'];
 **/
 
 /**
-  ### generators.config(config)
+  #### config(config)
 
   Generate a configuration object suitable for passing into an W3C 
   RTCPeerConnection constructor first argument, based on our custom config.
@@ -65,7 +65,7 @@ exports.config = function(config) {
 };
 
 /**
-  ### generators.connectionConstraints(flags, constraints)
+  #### connectionConstraints(flags, constraints)
 
   This is a helper function that will generate appropriate connection
   constraints for a new `RTCPeerConnection` object which is constructed
@@ -96,7 +96,7 @@ exports.connectionConstraints = function(flags, constraints) {
 };
 
 /**
-  ### generators.mediaConstraints(flags, context)
+  #### mediaConstraints(flags, context)
 
   Generate mediaConstraints appropriate for the context in which they are
   being called (i.e. either constructing an RTCPeerConnection object, or
@@ -135,7 +135,7 @@ exports.mediaConstraints = function(flags, context) {
 };
 
 /**
-  ### generators.parseFlags(opts)
+  #### parseFlags(opts)
 
   This is a helper function that will extract known flags from a generic
   options object.

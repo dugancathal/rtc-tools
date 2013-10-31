@@ -13,7 +13,7 @@ var W3C_STATES = {
 };
 
 /**
-  ## monitor
+  ### monitor
 
   ```js
   var monitor = require('rtc/monitor');
@@ -25,17 +25,9 @@ var W3C_STATES = {
   a simple function that provides an `EventEmitter` which gives updates
   on a connections state.
 
-  ### monitor(pc) -> EventEmitter
+  #### monitor(pc) -> EventEmitter
 
-  ```js
-  var monitor = require('rtc/monitor');
-  var pc = new RTCPeerConnection(config);
-
-  // watch pc and when active do something
-  monitor(pc).once('active', function() {
-    // active and ready to go
-  });
-  ```
+  <<< examples/monitor.js
 
   Events provided by the monitor are as follows:
 
@@ -89,7 +81,7 @@ var monitor = module.exports = function(pc, tag) {
 };
 
 /**
-  ### monitor.getState(pc)
+  #### monitor.getState(pc)
 
   Provides a unified state definition for the RTCPeerConnection based
   on a few checks.
@@ -143,12 +135,12 @@ var getState = monitor.getState = function(pc, tag) {
   debug(tag + 'signaling state: ' + signalingState +
     ', iceGatheringState: ' + iceGatheringState +
     ', iceConnectionState: ' + iceConnectionState);
-  
+
   return isActive ? W3C_STATES.ACTIVE : state;
 };
 
 /**
-  ### monitor.isActive(pc) -> Boolean
+  #### monitor.isActive(pc) -> Boolean
 
   Test an `RTCPeerConnection` to see if it's currently open.  The test for
   "openness" looks at a combination of current `signalingState` and

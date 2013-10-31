@@ -2,7 +2,7 @@
 'use strict';
 
 /**
-  ## rtc/detect
+  ### detect
 
   ```js
   var detect = require('rtc/detect');

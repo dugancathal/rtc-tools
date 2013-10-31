@@ -74,20 +74,22 @@ quickconnect('test')
   });
 ```
 
-## couple
+### couple
 
 ```js
 var couple = require('rtc/couple');
 ```
 
-### couple(pc, targetAttr, signaller, opts?)
+```js
+couple(pc, targetAttr, signaller, opts?)
+```
 
 Couple a WebRTC connection with another webrtc connection via a
 signalling scope.  The `targetAttr` argument specifies the criteria that
 are passed onto a `/request` command when looking for remote peer
 to couple and exchange messages with.
 
-### Example Usage
+#### Example Usage
 
 ```js
 var couple = require('rtc/couple');
@@ -95,7 +97,7 @@ var couple = require('rtc/couple');
 couple(new RTCPeerConnection(), { id: 'test' }, signaller);
 ```
 
-### Using Filters
+#### Using Filters
 
 In certain instances you may wish to modify the raw SDP that is provided
 by the `createOffer` and `createAnswer` calls.  This can be done by passing
@@ -106,7 +108,7 @@ a `sdpfilter` function (or array) in the options.  For example:
 couple(pc, { id: 'blah' }, signaller, { sdpfilter: tweakSdp });
 ```
 
-## rtc/detect
+### detect
 
 ```js
 var detect = require('rtc/detect');
@@ -115,7 +117,7 @@ var detect = require('rtc/detect');
 Provide the [rtc-core/detect](https://github.com/rtc-io/rtc-core#detect) 
 functionality.
 
-## generators
+### generators
 
 ```js
 var generators = require('rtc/generators');
@@ -124,12 +126,12 @@ var generators = require('rtc/generators');
 The generators package provides some utility methods for generating
 constraint objects and similar constructs.
 
-### generators.config(config)
+#### config(config)
 
 Generate a configuration object suitable for passing into an W3C 
 RTCPeerConnection constructor first argument, based on our custom config.
 
-### generators.connectionConstraints(flags, constraints)
+#### connectionConstraints(flags, constraints)
 
 This is a helper function that will generate appropriate connection
 constraints for a new `RTCPeerConnection` object which is constructed
@@ -145,18 +147,18 @@ can generate those additional options and intelligently combine any
 user defined constraints (in `constraints`) with shorthand flags that
 might be passed while using the `rtc.createConnection` helper.
 
-### generators.mediaConstraints(flags, context)
+#### mediaConstraints(flags, context)
 
 Generate mediaConstraints appropriate for the context in which they are
 being called (i.e. either constructing an RTCPeerConnection object, or
 on the `createOffer` or `createAnswer` calls).
 
-### generators.parseFlags(opts)
+#### parseFlags(opts)
 
 This is a helper function that will extract known flags from a generic
 options object.
 
-## rtc/media
+### media
 
 ```js
 var media = require('rtc/media');
@@ -165,7 +167,7 @@ var media = require('rtc/media');
 Provide the core [rtc-media](https://github.com/rtc-io/rtc-media) for
 convenience.
 
-## monitor
+### monitor
 
 ```js
 var monitor = require('rtc/monitor');
@@ -177,16 +179,18 @@ for use or not.  The monitor provides some assistance here by providing
 a simple function that provides an `EventEmitter` which gives updates
 on a connections state.
 
-### monitor(pc) -> EventEmitter
+#### monitor(pc) -> EventEmitter
 
 ```js
+var rtc = require('rtc');
 var monitor = require('rtc/monitor');
-var pc = new RTCPeerConnection(config);
+var pc = rtc.createConnection();
 
 // watch pc and when active do something
 monitor(pc).once('active', function() {
   // active and ready to go
 });
+
 ```
 
 Events provided by the monitor are as follows:
@@ -202,7 +206,7 @@ If so, the `active` event will be fired in the next tick.
 If you require a synchronous check of a connection's "openness" then
 use the `monitor.isActive` test outlined below.
 
-### monitor.getState(pc)
+#### monitor.getState(pc)
 
 Provides a unified state definition for the RTCPeerConnection based
 on a few checks.
@@ -213,13 +217,13 @@ connection.  In older versions we need to look at things like
 `signalingState` and `iceGatheringState` to make an educated guess 
 as to the connection state.
 
-### monitor.isActive(pc) -> Boolean
+#### monitor.isActive(pc) -> Boolean
 
 Test an `RTCPeerConnection` to see if it's currently open.  The test for
 "openness" looks at a combination of current `signalingState` and
 `iceGatheringState`.
 
-## rtc/signaller
+### signaller
 
 ```js
 var signaller = require('rtc/signaller');

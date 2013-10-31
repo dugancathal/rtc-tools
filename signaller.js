@@ -2,7 +2,7 @@
 'use strict';
 
 /**
-  ## rtc/signaller
+  ### signaller
 
   ```js
   var signaller = require('rtc/signaller');
