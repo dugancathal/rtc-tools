@@ -111,14 +111,14 @@ var detect = require('rtc/detect');
 Provide the [rtc-core/detect](https://github.com/rtc-io/rtc-core#detect) 
 functionality.
 
-## rtc/generators
-
-The generators package provides some utility methods for generating
-constraint objects and similar constructs.
+## generators
 
 ```js
 var generators = require('rtc/generators');
 ```
+
+The generators package provides some utility methods for generating
+constraint objects and similar constructs.
 
 ### generators.config(config)
 
@@ -143,13 +143,13 @@ might be passed while using the `rtc.createConnection` helper.
 
 ### generators.mediaConstraints(flags, context)
 
-Generate mediaConstraints appropriate for the context in which they are 
+Generate mediaConstraints appropriate for the context in which they are
 being called (i.e. either constructing an RTCPeerConnection object, or
 on the `createOffer` or `createAnswer` calls).
 
-### parseFlags(opts)
+### generators.parseFlags(opts)
 
-This is a helper function that will extract known flags from a generic 
+This is a helper function that will extract known flags from a generic
 options object.
 
 ## rtc/media

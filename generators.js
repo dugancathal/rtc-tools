@@ -41,14 +41,14 @@ var mappings = {
 var knownFlags = ['video', 'audio', 'data'];
 
 /**
-  ## rtc/generators
-
-  The generators package provides some utility methods for generating
-  constraint objects and similar constructs.
+  ## generators
 
   ```js
   var generators = require('rtc/generators');
   ```
+
+  The generators package provides some utility methods for generating
+  constraint objects and similar constructs.
 
 **/
 
@@ -80,7 +80,7 @@ exports.config = function(config) {
   can generate those additional options and intelligently combine any
   user defined constraints (in `constraints`) with shorthand flags that
   might be passed while using the `rtc.createConnection` helper.
-**/  
+**/
 exports.connectionConstraints = function(flags, constraints) {
   var generated = {};
   var m = mappings.create;
@@ -98,7 +98,7 @@ exports.connectionConstraints = function(flags, constraints) {
 /**
   ### generators.mediaConstraints(flags, context)
 
-  Generate mediaConstraints appropriate for the context in which they are 
+  Generate mediaConstraints appropriate for the context in which they are
   being called (i.e. either constructing an RTCPeerConnection object, or
   on the `createOffer` or `createAnswer` calls).
 **/
@@ -135,9 +135,9 @@ exports.mediaConstraints = function(flags, context) {
 };
 
 /**
-  ### parseFlags(opts)
+  ### generators.parseFlags(opts)
 
-  This is a helper function that will extract known flags from a generic 
+  This is a helper function that will extract known flags from a generic
   options object.
 **/
 var parseFlags = exports.parseFlags = function(options) {
