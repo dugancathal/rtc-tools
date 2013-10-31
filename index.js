@@ -45,17 +45,8 @@ exports.signaller = require('rtc-signaller');
 
   Create a new `RTCPeerConnection` auto generating default opts as required.
 
-  ```js
-  var conn;
+  <<< examples/createconn.js
 
-  // this is ok
-  conn = rtc.createConnection();
-
-  // and so is this
-  conn = rtc.createConnection({
-    iceServers: []
-  });
-  ```
 **/
 exports.createConnection = function(opts, constraints) {
   return new RTCPeerConnection(
@@ -66,3 +57,7 @@ exports.createConnection = function(opts, constraints) {
     gen.connectionConstraints(opts, constraints)
   );
 };
+
+/**
+  ## Helper Modules
+**/

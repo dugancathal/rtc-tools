@@ -22,6 +22,7 @@ TO BE COMPLETED.
 Create a new `RTCPeerConnection` auto generating default opts as required.
 
 ```js
+var rtc = require('rtc');
 var conn;
 
 // this is ok
@@ -31,7 +32,10 @@ conn = rtc.createConnection();
 conn = rtc.createConnection({
   iceServers: []
 });
+
 ```
+
+## Helper Modules
 
 ## connect-media
 
