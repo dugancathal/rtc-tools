@@ -53,6 +53,9 @@ function couple(conn, targetAttr, signaller, opts) {
   var attempt = 1;
   var attemptTimer;
 
+  // initialise the connection index
+  var cidx = (opts || {}).connectionIdx || 0;
+
   // initialise the processing queue (one at a time please)
   var q = async.queue(function(task, cb) {
     // if the task has no operation, then trigger the callback immediately
@@ -107,7 +110,7 @@ function couple(conn, targetAttr, signaller, opts) {
       // clear the open channel
       openChannel = null;
 
-      hsDebug('starting, making signaller request', conn.signalingState);
+      hsDebug('starting, making signaller request', targetAttr, conn.signalingState);
       signaller.request(targetAttr, function(err, channel) {
         if (err) {
           return;
@@ -137,7 +140,7 @@ function couple(conn, targetAttr, signaller, opts) {
                 openChannel = channel;
 
                 // send the sdp
-                channel.send('/sdp', desc);
+                channel.send('/sdp:' + cidx, desc);
 
                 // clear the block
                 signaller.clearBlock(blockId);
@@ -161,7 +164,7 @@ function couple(conn, targetAttr, signaller, opts) {
 
   function handleLocalCandidate(evt) {
     if (evt.candidate && openChannel) {
-      openChannel.send('/candidate', evt.candidate);
+      openChannel.send('/candidate:' + cidx, evt.candidate);
     }
   }
 
@@ -174,9 +177,16 @@ function couple(conn, targetAttr, signaller, opts) {
     conn.addIceCandidate(new RTCIceCandidate(data));
   }
 
-  function handleSdp(data) {
+  function handleSdp(data, originalData) {
     // queue the remote description operation
     q.push({ op: function(task, cb) {
+      debug('setting remote description: ', data);
+
+      // TODO: better validation
+      if (data.type === 'answer' && conn.remoteDescription) {
+        return;
+      }
+
       // update the remote description
       // once successful, send the answer
       conn.setRemoteDescription(
@@ -213,16 +223,16 @@ function couple(conn, targetAttr, signaller, opts) {
   conn.addEventListener('icecandidate', handleLocalCandidate);
 
   // when we receive sdp, then
-  signaller.on('sdp', handleSdp);
-  signaller.on('candidate', handleRemoteCandidate);
+  signaller.on('sdp:' + cidx, handleSdp);
+  signaller.on('candidate:' + cidx, handleRemoteCandidate);
 
   // when the connection closes, remove event handlers
   mon.once('closed', function() {
     debug('closed');
 
     // remove listeners
-    signaller.removeListener('sdp', handleSdp);
-    signaller.removeListener('candidate', handleRemoteCandidate);
+    signaller.removeListener('sdp:' + cidx, handleSdp);
+    signaller.removeListener('candidate:' + cidx, handleRemoteCandidate);
   });
 
   // patch in the create offer functions
