@@ -10,6 +10,7 @@ the front-end component of a WebRTC application.
 
 [![browser support](https://ci.testling.com/rtc-io/rtc.png)](https://ci.testling.com/rtc-io/rtc)
 
+[![unstable](http://hughsk.github.io/stability-badges/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
 
 ## Getting Started
 
@@ -80,6 +81,22 @@ var generators = require('rtc/generators');
 Generate a configuration object suitable for passing into an W3C 
 RTCPeerConnection constructor first argument, based on our custom config.
 
+### generators.connectionConstraints(flags, constraints)
+
+This is a helper function that will generate appropriate connection
+constraints for a new `RTCPeerConnection` object which is constructed
+in the following way:
+
+```js
+var conn = new RTCPeerConnection(flags, constraints);
+```
+
+In most cases the constraints object can be left empty, but when creating
+data channels some additional options are required.  This function
+can generate those additional options and intelligently combine any
+user defined constraints (in `constraints`) with shorthand flags that
+might be passed while using the `rtc.createConnection` helper.
+
 ### generators.mediaConstraints(flags, context)
 
 Generate mediaConstraints appropriate for the context in which they are 
@@ -90,11 +107,6 @@ on the `createOffer` or `createAnswer` calls).
 
 This is a helper function that will extract known flags from a generic 
 options object.
-
-## rtc/media
-
-Provide the core [rtc-media](https://github.com/rtc-io/rtc-media) for
-convenience.
 
 ## rtc/monitor
 
@@ -146,11 +158,6 @@ Test an `RTCPeerConnection` to see if it's currently open.  The test for
 "openness" looks at a combination of current `signalingState` and
 `iceGatheringState`.
 
-## rtc/signaller
-
-Provide the core [rtc-signaller](https://github.com/rtc-io/rtc-signaller)
-for convenience.
-
 ## Internal RTC Helper Libraries
 
 The RTC library uses a number of helper modules that are contained within
@@ -172,3 +179,21 @@ listen(pc).on('negotiationneeded', function(evt) {
 The `listen` helper provides an event emitter for a peer connection object
 that will bind to each of the core events WebRTC events (unless overriden
 by providing the listen function additional arguments).
+
+## License(s)
+
+### Apache 2.0
+
+Copyright 2013 National ICT Australia Limited (NICTA)
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
