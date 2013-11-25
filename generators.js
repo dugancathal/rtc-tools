@@ -1,26 +1,11 @@
 /* jshint node: true */
 'use strict';
 
+var debug = require('cog/logger')('generators');
 var detect = require('./detect');
 var defaults = require('cog/defaults');
 
 var mappings = {
-  offer: {
-    // audio toggle
-    // { audio: false } in peer connection config turns off audio
-    audio: function(c) {
-      c.mandatory = c.mandatory || {};
-      c.mandatory.OfferToReceiveAudio = true;
-    },
-
-    // video toggle
-    // { video: false } in peer connection config turns off video
-    video: function(c) {
-      c.mandatory = c.mandatory || {};
-      c.mandatory.OfferToReceiveVideo = true;
-    }
-  },
-
   create: {
     // data enabler
     data: function(c) {
@@ -55,7 +40,7 @@ var knownFlags = ['video', 'audio', 'data'];
 /**
   ### generators.config(config)
 
-  Generate a configuration object suitable for passing into an W3C 
+  Generate a configuration object suitable for passing into an W3C
   RTCPeerConnection constructor first argument, based on our custom config.
 **/
 exports.config = function(config) {
@@ -80,10 +65,11 @@ exports.config = function(config) {
   can generate those additional options and intelligently combine any
   user defined constraints (in `constraints`) with shorthand flags that
   might be passed while using the `rtc.createConnection` helper.
-**/  
+**/
 exports.connectionConstraints = function(flags, constraints) {
   var generated = {};
   var m = mappings.create;
+  var out;
 
   // iterate through the flags and apply the create mappings
   Object.keys(flags || {}).forEach(function(key) {
@@ -92,52 +78,17 @@ exports.connectionConstraints = function(flags, constraints) {
     }
   });
 
-  return defaults({}, constraints, generated);
-};
+  // generate the connection constraints
+  out = defaults({}, constraints, generated);
+  debug('generated connection constraints: ', out);
 
-/**
-  ### generators.mediaConstraints(flags, context)
-
-  Generate mediaConstraints appropriate for the context in which they are 
-  being called (i.e. either constructing an RTCPeerConnection object, or
-  on the `createOffer` or `createAnswer` calls).
-**/
-exports.mediaConstraints = function(flags, context) {
-  // create an empty constraints object
-  var constraints = {
-    optional: [{ DtlsSrtpKeyAgreement: true }]
-  };
-
-  // provide default mandatory constraints for the offer
-  if (context === 'offer') {
-    constraints.mandatory = {
-      OfferToReceiveVideo: false,
-      OfferToReceiveAudio: false
-    };
-  }
-
-  // get the mappings for the context (defaulting to the offer context)
-  var contextMappings = mappings[context || 'offer'] || {};
-
-  // if we haven't been passed an array for flags, then return the constraints
-  if (! Array.isArray(flags)) {
-    flags = parseFlags(flags);
-  }
-
-  flags.map(function(flag) {
-    if (typeof contextMappings[flag] == 'function') {
-      // mutate the constraints
-      contextMappings[flag](constraints);
-    }
-  });
-
-  return constraints;
+  return out;
 };
 
 /**
   ### parseFlags(opts)
 
-  This is a helper function that will extract known flags from a generic 
+  This is a helper function that will extract known flags from a generic
   options object.
 **/
 var parseFlags = exports.parseFlags = function(options) {
