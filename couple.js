@@ -147,8 +147,8 @@ function couple(conn, targetAttr, signaller, opts) {
   }
 
   function handleLocalCandidate(evt) {
-    if (evt.candidate && openChannel) {
-      openChannel.send('/candidate:' + cidx, evt.candidate);
+    if (evt.candidate && channel) {
+      channel.send('/candidate:' + cidx, evt.candidate);
     }
   }
 
