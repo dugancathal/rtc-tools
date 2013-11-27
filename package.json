@@ -2,7 +2,7 @@
   "name": "rtc",
   "description": "Cross-browser WebRTC helpers",
   "author": "Damon Oehlman <damon.oehlman@nicta.com.au>",
-  "version": "0.8.1",
+  "version": "0.10.1",
   "dependencies": {
     "rtc-core": "~0.5.0",
     "cog": "~0.3.1",
@@ -12,7 +12,7 @@
     "tape": "~2.0.0",
     "uuid": "~1.4.1",
     "messenger-memory": "~0.1.1",
-    "rtc-signaller": "~0.5.0"
+    "rtc-signaller": "~0.7.1"
   },
   "scripts": {
     "test": "node test/all.js",
