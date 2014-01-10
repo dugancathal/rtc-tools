@@ -30,6 +30,9 @@ exports.RTCPeerConnection = detect('RTCPeerConnection');
 // add the couple utility
 exports.couple = require('./couple');
 
+// add the datachannel helper
+exports.datachannel = require('./datachannel');
+
 /**
   ## Factories
 **/
