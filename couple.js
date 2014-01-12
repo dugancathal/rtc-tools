@@ -73,14 +73,11 @@ function couple(conn, targetId, signaller, opts) {
 
   // initilaise the negotiation helpers
   var isMaster = signaller.isMaster(targetId);
-
-
   var createOffer = prepNegotiate(
     'createOffer',
     isMaster,
     [ checkStable, checkNotConnecting ]
   );
-
   var createAnswer = prepNegotiate(
     'createAnswer',
     true,
@@ -320,6 +317,9 @@ function couple(conn, targetId, signaller, opts) {
   if (typeof targetId != 'string' && (! (targetId instanceof String))) {
     throw new Error('2nd argument (targetId) should be a string');
   }
+
+  // tag the connection with the target id
+  conn._targetId = targetId;
 
   // when regotiation is needed look for the peer
   conn.addEventListener('negotiationneeded', function() {
