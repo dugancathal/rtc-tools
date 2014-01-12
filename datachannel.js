@@ -24,5 +24,40 @@
   <<< examples/create-dcs.js
 **/
 module.exports = function(pc, signaller, name, opts, callback) {
-  
+  var targetId;
+  var dc;
+  var dcOpts = {};
+
+  // handle the no opts case, but a callback specified
+  if (typeof opts == 'function') {
+    callback = opts;
+    opts = {};
+  }
+
+  // ensure we have a callback
+  callback = callback || function() {};
+
+  // get the target id from either the peer connection or the opts
+  targetId = pc._targetId || (opts || {}).targetId;
+
+  // if we don't have a targetid, specified, then abort
+  if (! targetId) {
+    return callback(new Error('no targetid found in peer connection or opts'));
+  }
+
+  // create the data channel
+  dc = pc.createDataChannel(name, dcOpts);
+  dc.negotiated = true;
+
+  if (dc.readyState == 'open') {
+    return callback(null, dc);
+  }
+
+  // wait for the data channel to open
+  dc.onopen = function() {
+    dc.onopen = null;
+    callback(null, dc);
+  }
+
+  return dc;
 };
