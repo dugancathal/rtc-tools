@@ -21,24 +21,56 @@ var gen = require('./generators');
 var detect = exports.detect = require('./detect');
 
 // export cog logger for convenience
-exports.logger = require('cog/logger');
+var logger = exports.logger = require('cog/logger');
 
 // export peer connection
 var RTCPeerConnection =
 exports.RTCPeerConnection = detect('RTCPeerConnection');
 
 // add the couple utility
-exports.couple = require('./couple');
+var couple = exports.couple = require('./couple');
 
 // add the datachannel helper
-exports.datachannel = require('./datachannel');
+var datachannel = exports.datachannel = require('./datachannel');
 
 /**
   ## Factories
 **/
 
 /**
-  ### createConnection(opts?, constraints?)
+  ### rtc.connect
+
+  The `connect` helper is simplifies the process of creating a new peer
+  connection and then coupling it to a target id via a signaller.
+
+**/
+exports.connect = function(signaller, targetId, opts, callback) {
+  var pc;
+  var monitor;
+
+  // handle no opts, but a callback being specified
+  if (typeof opts == 'function') {
+    callback = opts;
+    opts = {};
+  }
+
+  // create a new connection
+  pc = createConnection(opts, (opts || {}).constraints);
+
+  // couple the connection and monitor the connection
+  monitor = couple(pc, targetId, signaller, opts);
+
+  // once the connection is active, trigger the callback
+  if (typeof callback == 'function') {
+    monitor.once('active', callback);
+  }
+
+  // return the peer connection
+  return pc;
+};
+
+/**
+  ### rtc.createConnection(opts?, constraints?)
 
   Create a new `RTCPeerConnection` auto generating default opts as required.
 
@@ -54,7 +86,7 @@ exports.datachannel = require('./datachannel');
   });
   ```
 **/
-exports.createConnection = function(opts, constraints) {
+var createConnection = exports.createConnection = function(opts, constraints) {
   return new RTCPeerConnection(
     // generate the config based on options provided
     gen.config(opts),
